@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PokéDex — Sistema de Captura</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ═══════════════════════════════════
+       SCREEN 1: LOGIN / REGISTRO
+  ════════════════════════════════════════ -->
+  <section class="screen active" id="screen-login">
+    <div class="login-bg-effects">
+      <div class="bg-orb orb-1"></div>
+      <div class="bg-orb orb-2"></div>
+      <div class="bg-orb orb-3"></div>
+    </div>
+    <div class="login-container">
+      <div class="login-logo">
+        <div class="pokeball-icon"></div>
+        <h1 class="logo-title">PokéDex</h1>
+        <p class="logo-subtitle">Sistema de Captura v2.0</p>
+      </div>
+      <div class="login-card">
+        <div class="tab-switcher">
+          <button class="tab active" id="tab-login" onclick="switchTab('login')">Iniciar sesión</button>
+          <button class="tab" id="tab-register" onclick="switchTab('register')">Registrarse</button>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <div id="form-login" class="auth-form">
+          <div class="form-group">
+            <label class="form-label" for="login-cedula">Cédula de entrenador</label>
+            <input type="text" id="login-cedula" class="form-input" placeholder="Ej: 12345678" maxlength="10" autocomplete="off">
+          </div>
+          <button id="btn-login" class="btn-primary btn-full">
+            <span>Ingresar al sistema</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+          <p class="form-hint">¿No tienes cuenta? <button class="link-btn" onclick="switchTab('register')">Regístrate aquí</button></p>
+        </div>
+
+        <!-- REGISTER FORM -->
+        <div id="form-register" class="auth-form hidden">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="reg-cedula">Cédula</label>
+              <input type="text" id="reg-cedula" class="form-input" placeholder="8–10 dígitos" maxlength="10" autocomplete="off">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="reg-edad">Edad</label>
+              <input type="number" id="reg-edad" class="form-input" placeholder="18–100" min="18" max="100">
+            </div>
+            <div class="form-group form-full">
+              <label class="form-label" for="reg-nombre">Nombre completo</label>
+              <input type="text" id="reg-nombre" class="form-input" placeholder="Tu nombre de entrenador" maxlength="50" autocomplete="off">
+            </div>
+            <div class="form-group form-full">
+              <label class="form-label" for="reg-email">Email</label>
+              <input type="email" id="reg-email" class="form-input" placeholder="correo@ejemplo.com">
+            </div>
+          </div>
+          <button id="btn-register" class="btn-primary btn-full">
+            <span>Crear cuenta</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <line x1="19" y1="8" x2="19" y2="14"/>
+              <line x1="16" y1="11" x2="22" y2="11"/>
+            </svg>
+          </button>
+          <p class="form-hint">¿Ya tienes cuenta? <button class="link-btn" onclick="switchTab('login')">Inicia sesión</button></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       SCREEN 2: HUB
+  ════════════════════════════════════════ -->
+  <section class="screen" id="screen-hub">
+    <header class="hub-header">
+      <div class="hub-logo">
+        <div class="pokeball-icon small"></div>
+        <span class="logo-text">PokéDex</span>
+      </div>
+      <button class="btn-icon nav-logout">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+        <span>Salir</span>
+      </button>
+    </header>
+    <div class="hub-content">
+      <div class="user-banner">
+        <div class="user-avatar">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <div class="user-info">
+          <h2 class="user-name" id="hub-username">Entrenador</h2>
+          <span class="user-cedula" id="hub-cedula">Cédula: —</span>
+        </div>
+        <div class="user-rank">🏆</div>
+      </div>
+      <div class="progress-card">
+        <div class="progress-stats">
+          <div class="stat">
+            <span class="stat-number" id="hub-captured">0</span>
+            <span class="stat-label">Capturados</span>
+          </div>
+          <div class="stat-divider">/</div>
+          <div class="stat">
+            <span class="stat-number" id="hub-total">0</span>
+            <span class="stat-label">Total</span>
+          </div>
+          <div class="stat-pct" id="hub-pct">0%</div>
+        </div>
+        <div class="progress-bar-track">
+          <div class="progress-bar-fill" id="hub-progress-fill" style="width:0%"></div>
+        </div>
+        <p class="progress-label-text">Progreso de la Pokédex</p>
+      </div>
+      <div class="hub-nav-grid">
+        <button class="hub-nav-card" id="btn-go-capturar">
+          <div class="hub-nav-icon">⊕</div>
+          <div class="hub-nav-info">
+            <span class="hub-nav-title">Capturar Pokémon</span>
+            <span class="hub-nav-sub">Explora y captura nuevos Pokémon</span>
+          </div>
+          <svg class="hub-nav-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <button class="hub-nav-card" id="btn-go-coleccion">
+          <div class="hub-nav-icon">🗂️</div>
+          <div class="hub-nav-info">
+            <span class="hub-nav-title">Mi Colección</span>
+            <span class="hub-nav-sub">Ver todos tus Pokémon capturados</span>
+          </div>
+          <svg class="hub-nav-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       SCREEN 3: CAPTURAR
+  ════════════════════════════════════════ -->
+  <section class="screen" id="screen-capturar">
+    <nav class="top-nav">
+      <button class="nav-btn nav-hub">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        <span>Hub</span>
+      </button>
+      <div class="nav-tabs">
+        <button class="nav-tab active">Capturar</button>
+        <button class="nav-tab nav-coleccion">Colección</button>
+      </div>
+      <button class="nav-btn nav-logout">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+        <span>Salir</span>
+      </button>
+    </nav>
+    <div class="screen-content">
+      <div class="screen-header">
+        <h2 class="screen-title">Capturar Pokémon</h2>
+        <div class="capture-progress">
+          <div class="progress-bar-track small-track">
+            <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+          </div>
+          <span class="progress-text" id="progress-label">0/0</span>
+        </div>
+      </div>
+      <div class="search-wrap">
+        <svg class="search-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" id="search-input" class="search-input" placeholder="Buscar por nombre o tipo..." autocomplete="off">
+        <button class="search-clear hidden" id="btn-search-clear">✕</button>
+      </div>
+      <div class="pokemon-grid" id="grid-capturar">
+        <div class="loading-state">
+          <div class="spinner"></div>
+          <p>Cargando Pokémon...</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       SCREEN 4: MI COLECCIÓN
+  ════════════════════════════════════════ -->
+  <section class="screen" id="screen-coleccion">
+    <nav class="top-nav">
+      <button class="nav-btn nav-hub">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        <span>Hub</span>
+      </button>
+      <div class="nav-tabs">
+        <button class="nav-tab nav-capturar">Capturar</button>
+        <button class="nav-tab active">Colección</button>
+      </div>
+      <button class="nav-btn nav-logout">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+        <span>Salir</span>
+      </button>
+    </nav>
+    <div class="screen-content">
+      <div class="screen-header">
+        <h2 class="screen-title">Mi Colección</h2>
+        <span class="coleccion-count" id="coleccion-count">0 Pokémon</span>
+      </div>
+      <div class="pokemon-grid" id="grid-coleccion">
+        <div class="loading-state">
+          <div class="spinner"></div>
+          <p>Cargando colección...</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /.app -->
+
+<div id="toast-container" aria-live="polite"></div>
+<div id="capture-modal" class="capture-modal hidden" aria-hidden="true">
+  <div class="capture-modal-card">
+    <div class="capture-modal-balls">
+      <span class="capture-ball"></span>
+      <span class="capture-ball"></span>
+      <span class="capture-ball"></span>
+    </div>
+    <h3 id="capture-modal-title" class="capture-modal-title">Poké Ball lista</h3>
+    <p id="capture-modal-text" class="capture-modal-text"></p>
+    <p id="capture-modal-meta" class="capture-modal-meta"></p>
+    <button id="capture-modal-close" class="btn-primary btn-full">Entendido</button>
+  </div>
+</div>
+
+<div id="loader" class="hidden">
+  <div class="loader-inner">
+    <div class="pokeball-loader"></div>
+    <p>Un momento...</p>
+  </div>
+</div>
+
+<script src="conexio_index.js"></script>
+</body>
+</html>
